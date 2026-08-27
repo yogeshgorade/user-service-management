@@ -2,7 +2,6 @@ package com.yogesh.user_service.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -14,6 +13,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
             ResourceAlreadyExistsException exception,
             HttpServletRequest request) {
         log.warn(
-                "Resource not found. Path: {}, Message: {}",
+                "Resource already exists. Path: {}, Message: {}",
                 request.getRequestURI(),
                 exception.getMessage()
         );
@@ -130,11 +130,14 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(InvalidSearchException.class)
     public ResponseEntity<ApiErrorResponse>handleInvalidSearch(InvalidSearchException exception,HttpServletRequest request){
-        ApiErrorResponse response=
-                new ApiErrorResponse(LocalDateTime.now(),HttpStatus.BAD_REQUEST.value(),
-                        "First Name is required",
+        ApiErrorResponse response =
+                new ApiErrorResponse(
+                        LocalDateTime.now(),
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Bad Request",
                         exception.getMessage(),
-                        request.getRequestURI());
+                        request.getRequestURI()
+                );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(response);
     }
