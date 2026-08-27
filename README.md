@@ -126,3 +126,33 @@ Service
 User Entity
    ↓
 Database
+```
+
+## Docker Setup
+
+### Prerequisites
+
+- Docker Desktop installed and running
+- Git
+
+### Run the application
+
+```bash
+docker compose up -d --build
+```
+
+### Check running containers
+
+```bash
+docker ps
+```
+
+### Access Swagger UI
+
+http://localhost:8080/swagger-ui/index.html
+
+### Stop the application
+
+```bash
+docker compose down
+```
