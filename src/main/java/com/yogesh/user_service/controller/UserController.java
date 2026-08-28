@@ -51,8 +51,8 @@ public class UserController {
    @PostMapping
    public ResponseEntity<UserResponse> createUser(
            @Valid @RequestBody CreateUserRequest request) {
-       log.info("Create User Controller started.....");
-      UserResponse response = userService.createUser(request);
+       log.info("Creating user request received");
+       UserResponse response = userService.createUser(request);
       return ResponseEntity
               .status(HttpStatus.CREATED)
               .body(response);

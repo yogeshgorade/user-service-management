@@ -29,10 +29,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     @Override
     public UserResponse createUser(CreateUserRequest request) {
-        log.info("creating user with email:{}",request.getEmail());
+        log.info("Creating user request received");
         if (userRepository.existsByEmail(request.getEmail())) {
-            log.warn("User creation failed. Email already exists: {}",
-                    request.getEmail());
+            log.warn("User creation failed: email already exists");
             throw new ResourceAlreadyExistsException(
                     "Email already exists."
             );
@@ -45,8 +44,7 @@ public class UserServiceImpl implements UserService {
         }
         User user = convertToUserBean(request);
         User responseUser = userRepository.save(user);
-        log.info("User created successfully with ID: {}",
-                user.getId());
+        log.info("User created successfully with ID: {}", responseUser.getId());
         UserResponse response=convertToUserResponse(responseUser);
         return response;
     }
@@ -152,7 +150,6 @@ public class UserServiceImpl implements UserService {
         Page<User>users=userRepository.findAll(pageable);
         return users.map(this::convertToUserResponse);
     }
-
     @Override
     public Page<UserResponse> searchUser(String search) {
         if (search == null || search.isEmpty()) {
